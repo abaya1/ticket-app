@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: auth-deployment
+spec: 
+  replicas: 1
+  selector:
+    matchlabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: aabay27/auth:0.0.1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    -name: auth
+    protocol: TCP
+    port: 4000
+    targetPort: 4000
