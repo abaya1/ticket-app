@@ -1,11 +1,11 @@
 apiVersion: apps/v1
-kind: deployment
+kind: Deployment
 metadata:
   name: auth-deployment
 spec: 
   replicas: 1
   selector:
-    matchlabels:
+    matchLabels:
       app: auth
   template:
     metadata:
@@ -24,7 +24,7 @@ spec:
   selector:
     app: auth
   ports:
-    -name: auth
-    protocol: TCP
-    port: 4000
-    targetPort: 4000
+    - name: auth
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
