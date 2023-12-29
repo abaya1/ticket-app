@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../services/password";
 
 //interface that describes a user
 interface IUser {
@@ -27,7 +28,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+},
+{
+    toJSON: {
+        transform(doc , ret) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.password;
+            delete ret.__v;
+        }
+    }
+});
+userSchema.pre('save' , async function(done) {
+    if(this.isModified('password')) {
+        const hashed = await Password.toHash(this.get('password'))
+        this.set('password', hashed)
+    }
+    done();
+});
 
 const User = mongoose.model<IUserDocument, IUserModel>('User', userSchema);
 
