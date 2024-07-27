@@ -1,4 +1,4 @@
 node_modules
-.next/
-.swc/
-.*.env
+frontend/.next/
+frontend/.swc/
+frontend/.*.env
